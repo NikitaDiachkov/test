@@ -1,0 +1,68 @@
+Короче мне нужен сайт
+с такой БД Supabase
+Должна быть авторизация/регистрация
+У пользователя должна быть photo, fullname, email, password, role ( admin или посетитель что-т о типа того) и типа рейтинг и ещё типа определение для рейтинга, типа там "новичок" к примеру если мало рейтинга или "про" если норм рейтинг
+Админ панель ( редактирование пользователей )
+Страница профиля для каждого пользователя
+Должны быть несколько тестов по разным категориям и в каждой категории свои сложности (легкий-средний-сложный-невозможный ну и за это систему баллов сделать) ( админы должны уметь добавлять или редактировать тесты )
+ну и на главной странице выводить общий рейтинг всех пользователей и оставлять отзывы ( или типа чата сделать ) 
+
+И по красивому оформить и чтобы всё работало
+
+--Первый запрос
+
+
+CREATE TYPE role_type AS ENUM ('admin', 'visitor')
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  fullname TEXT NOT NULL,
+  email TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL,
+  role role_type NOT NULL DEFAULT 'visitor',
+  photo_url TEXT,
+  rating INTEGER DEFAULT 0,
+  status TEXT DEFAULT 'новичок'
+);
+
+-- Добавление индекса для ускорения поиска по email (опционально)
+CREATE INDEX idx_users_email ON users(email);
+
+
+
+
+CREATE TYPE difficulty_type AS ENUM ('easy', 'medium', 'hard', 'impossible');
+
+CREATE TABLE tests (
+  id SERIAL PRIMARY KEY,
+  category TEXT NOT NULL,
+  difficulty difficulty_type NOT NULL,
+  question TEXT NOT NULL,
+  options JSON NOT NULL,
+  correct_answer TEXT NOT NULL,
+  points INTEGER NOT NULL,
+  created_by INTEGER REFERENCES users(id) ON DELETE SET NULL
+);
+
+CREATE INDEX idx_tests_category_difficulty ON tests(category, difficulty);
+
+
+
+CREATE TABLE reviews (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  message TEXT NOT NULL,
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_reviews_timestamp ON reviews(timestamp);
+
+
+Структура сайта
+index.php — главная страница (рейтинг, отзывы/чат).
+login.php — авторизация/регистрация.
+profile.php — профиль пользователя.
+admin.php — админ-панель.
+tests.php — страница тестов.
+api/ — папка для PHP-скриптов, работающих с Supabase API.
+

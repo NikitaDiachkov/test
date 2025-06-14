@@ -1,0 +1,6 @@
+<?php
+define('SUPABASE_URL', 'https://liazvtdsmiqdbtbabgmy.supabase.co');
+define('SUPABASE_ANON_KEY', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxpYXp2dGRzbWlxZGJ0YmFiZ215Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4MzI0NzksImV4cCI6MjA6NjU0MDg0Nzl9.oACZF0fdXzl9jg6elHrh2sOlkM7-3fh-ETvwEK_Q9fo');
+define('SUPABASE_SERVICE_ROLE', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxpYXp2dGRzbWlxZGJ0YmFiZ215Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0OTgzMjQ3OSwiZXhwIjoyMDY1NDA4NDc5fQ.U15RBuOzQu8bh6ygCr0lpfFbSku7C2_jElnp3Ykd9tU');
+
+?>
