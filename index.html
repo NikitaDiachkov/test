@@ -495,6 +495,7 @@
 
         <div class="section" id="reviewsSection">
             <h2>Отзывы</h2>
+            <div id="reviewsMessages"></div>
         </div>
 
         <div class="info-section">
@@ -551,6 +552,7 @@ const ratingSort = document.getElementById('ratingSort');
 const ratingTable = document.querySelector('#ratingTable tbody');
 const reviewsMessages = document.getElementById('reviewsMessages');
 const joinSection = document.getElementById('joinSection');
+
 
 let currentQuestions = [];
 let currentQuestionIndex = 0;
@@ -904,16 +906,15 @@ async function loadReviews(page = 1) {
             renderPagination('reviews', page, Math.ceil(totalReviews / itemsPerPage));
             return;
         }
-
-        reviewsMessages.innerHTML = reviews.map(r => `
-            <p>
-                <img src="${r.users?.photo_url || 'https://liazvtdsmiqdbtbabgmy.supabase.co/storage/v1/object/public/avatars/noPhoto.png'}" alt="${r.users?.fullname || 'Аноним'}'s avatar" style="width: 30px; height: 30px; border-radius: 50%; vertical-align: middle;">
-                <strong>${r.users?.fullname || 'Аноним'}</strong> 
-                (${new Date(r.created_at).toLocaleString()}): 
-                ${r.message || 'Отзыв пуст'} 
-                <span style="color: gold;">${'★'.repeat(r.rating || 0)}${'☆'.repeat(5 - (r.rating || 0))}</span>
-            </p>
-        `).join('');
+reviewsMessages.innerHTML = reviews.map(r => `
+    <p>
+        <img src="${r.users?.photo_url || 'https://liazvtdsmiqdbtbabgmy.supabase.co/storage/v1/object/public/avatars/noPhoto.png'}" alt="${r.users?.fullname || 'Аноним'}'s avatar" style="width: 30px; height: 30px; border-radius: 50%; vertical-align: middle;">
+        <strong>${r.users?.fullname || 'Аноним'}</strong> 
+        (${new Date(r.timestamp).toLocaleString()}): 
+        ${r.message || 'Отзыв пуст'} 
+        <span style="color: gold;">${'★'.repeat(r.rating || 0)}${'☆'.repeat(5 - (r.rating || 0))}</span>
+    </p>
+`).join('');
         reviewsMessages.scrollTop = reviewsMessages.scrollHeight;
         renderPagination('reviews', page, Math.ceil(totalReviews / itemsPerPage));
     } catch (error) {
